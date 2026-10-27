@@ -1,16 +1,25 @@
 # Presentación del Diplomado · RBTTF
 
-Presentación institucional animada de 14 diapositivas. Incluye secuencias cartográficas y mapa interactivo con infraestructura, equipamiento y planes de manejo.
+Presentación institucional animada de 14 diapositivas.
 
-## Publicación en Render
+## Desplegar en Render
 
-- Tipo: Static Site
-- Rama: main
-- Build command: `echo Ready`
-- Publish directory: `dist`
+Crear un **Static Site** conectado a este repositorio.
+- Rama: `main`
+- Build Command: `echo Ready`
+- Publish Directory: `dist`
+- Auto-Deploy: activado
 
-## Uso
+## Editar
 
-Flechas izquierda/derecha para avanzar, pantalla completa y botón para repetir animaciones. D3 y D5 avanzan por etapas. D4 permite consultar fichas.
+- `dist/elements.json`: elementos independientes de las 14 diapositivas (texto, imágenes, posiciones).
+- `dist/app.js`: navegación, secuencias D3 y D5, y mapa D4.
+- `dist/style.css`: diseño y animaciones.
+- `dist/mapdata.json`: copia de geometrías y atributos públicos de ArcGIS consultados el 26 de octubre de 2026.
+- `dist/assets`: mapas en alta resolución e imágenes optimizadas para web.
 
-Los datos cartográficos son una copia consultada el 26 de octubre de 2026. El mapa base intenta usar OpenStreetMap y dispone de un fondo alternativo Esri si falla la carga.
+Flechas izquierda/derecha para avanzar, pantalla completa y botón para repetir animaciones. D4 abre fichas de infraestructura, equipamiento y planes de manejo. OpenStreetMap es el fondo principal, con Esri como alternativa si falla.
+
+Los datos de las fichas conservan las fechas y estados de la fuente; no se actualizan automáticamente.
+
+Para probar localmente: `python -m http.server 8080 --directory dist`.
