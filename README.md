@@ -1,25 +1,38 @@
-# Presentación del Diplomado · RBTTF
+# Presentación institucional RBTTF
 
-Presentación institucional animada de 14 diapositivas.
+Presentación web de 17 diapositivas, publicada en https://presentacion-diplomado-rbttf.onrender.com .
 
-## Desplegar en Render
+## Uso
 
-Crear un **Static Site** conectado a este repositorio.
-- Rama: `main`
-- Build Command: `echo Ready`
-- Publish Directory: `dist`
-- Auto-Deploy: activado
+- Clic izquierdo/derecho en el fondo: anterior/siguiente. Flechas del teclado: navegar.
+- F: pantalla completa. Escape: salir. R o ↻: repetir animaciones.
+- D4 y D7: cada avance recorre las etapas cartográficas antes de cambiar de diapositiva.
+- D5: posar el cursor o pulsar una foto para ampliarla; pulsar otra vez para restablecer.
+- D6: zoom, desplazamiento, fichas y selección de capas dentro del mapa.
+- D13 y D17: el botón Ampliar tablero aprovecha la superficie completa sin salir de la presentación.
 
-## Editar
+## Estructura y ampliación
 
-- `dist/elements.json`: elementos independientes de las 14 diapositivas (texto, imágenes, posiciones).
-- `dist/app.js`: navegación, secuencias D3 y D5, y mapa D4.
-- `dist/style.css`: diseño y animaciones.
-- `dist/mapdata.json`: copia de geometrías y atributos públicos de ArcGIS consultados el 26 de octubre de 2026.
-- `dist/assets`: mapas en alta resolución e imágenes optimizadas para web.
+`dist/` es el sitio listo para publicar. No requiere compilación ni dependencias de instalación. Render conserva `echo Ready` y el directorio de publicación `dist`, en el servicio existente.
 
-Flechas izquierda/derecha para avanzar, pantalla completa y botón para repetir animaciones. D4 abre fichas de infraestructura, equipamiento y planes de manejo. OpenStreetMap es el fondo principal, con Esri como alternativa si falla.
+- `elements.json`: contenido y orden de las diapositivas. `original` identifica la diapositiva del PPTX fuente; `kind` distingue video, collage y ortofoto.
+- `app.js`: navegación, animación cartográfica, video, collage, mapas y aplicaciones incrustadas.
+- `style.css`: diseño 16:9, posiciones y animaciones, con soporte para movimiento reducido.
+- `assets/`: imágenes proporcionadas y video (misma secuencia de 15 segundos y resolución 1920×1080; optimizado para reproducción web). Las nuevas fotos y ortofoto usan WebP sin pérdida, con los mismos píxeles del PNG original; captura financiera PNG original sin cambios.
+- `mapdata.json`: copia local de las capas originales del mapa CTPT utilizada en la primera publicación; las fechas de los atributos se conservan. No se presenta como una actualización automática en tiempo real.
+- `slides.json`: correspondencia entre numeración final y original.
 
-Los datos de las fichas conservan las fechas y estados de la fuente; no se actualizan automáticamente.
+Para agregar las tres diapositivas pendientes: insertar sus objetos en `elements.json`, agregar sus recursos en `assets/`, actualizar el índice `slides.json` y, si se insertan antes de escenas especiales, ajustar sus posiciones en `sequences` y en las condiciones de `render()` de `app.js`. El contador se calcula automáticamente. No hay diapositivas vacías reservadas. Un commit en `main` actualiza el mismo servicio Render.
 
-Para probar localmente: `python -m http.server 8080 --directory dist`.
+## Datos y límites
+
+- Reserva: 424,000 ha y 33 municipalidades, según la corrección del autor.
+- Ámbito del proyecto: 376,500 ha, 30 municipalidades y €14.34 M; se conservan los indicadores del PPTX original.
+- MAA y CCB se revelan como capas de píxeles obtenidas de las imágenes originales alineadas. No se inventan geometrías. Se retienen MAA al agregar CCB.
+- D6 usa Esri World Topographic Map y las tres capas originales con iconos reducidos y casillas de visibilidad. Los datos del mapa permanecen disponibles si el fondo falla.
+- D12 es una captura de referencia, no datos en tiempo real.
+- D13 y D17 incrustan las aplicaciones públicas originales de ArcGIS. Requieren internet y soporte WebGL2 para sus mapas. En el navegador remoto de revisión se comprobó la carga del Dashboard y el cambio de su indicador; su mapa informó falta de WebGL2. Esto no es un bloqueo de iframe. La aplicación original conserva sus herramientas y restricciones.
+
+## Comprobaciones de la actualización
+
+Se revisaron el orden de las 17 diapositivas, recursos locales, video automático, indicadores de ambos mapas, collage, fichas y conmutación de capas, acumulación cartográfica MAA/CCB, captura financiera, ficha técnica sin barra inferior, ortofoto y navegación. No se modificaron otros repositorios ni servicios.
