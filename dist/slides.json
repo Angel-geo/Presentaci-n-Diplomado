@@ -1,1 +1,176 @@
-[{"number": 1, "original": 1, "kind": "original", "sourceSlide": null}, {"number": 2, "original": null, "kind": "video", "sourceSlide": null}, {"number": 3, "original": null, "kind": "imported", "sourceSlide": 2}, {"number": 4, "original": null, "kind": "imported", "sourceSlide": 3}, {"number": 5, "original": null, "kind": "imported", "sourceSlide": 4}, {"number": 6, "original": null, "kind": "imported", "sourceSlide": 5}, {"number": 7, "original": null, "kind": "imported", "sourceSlide": 6}, {"number": 8, "original": null, "kind": "imported", "sourceSlide": 7}, {"number": 9, "original": null, "kind": "imported", "sourceSlide": 8}, {"number": 10, "original": null, "kind": "imported", "sourceSlide": 9}, {"number": 11, "original": null, "kind": "imported", "sourceSlide": 10}, {"number": 12, "original": null, "kind": "imported", "sourceSlide": 11}, {"number": 13, "original": null, "kind": "imported", "sourceSlide": 12}, {"number": 14, "original": 2, "kind": "original", "sourceSlide": null}, {"number": 15, "original": 3, "kind": "original", "sourceSlide": null}, {"number": 16, "original": null, "kind": "conservacion", "sourceSlide": null}, {"number": 17, "original": 4, "kind": "original", "sourceSlide": null}, {"number": 18, "original": 5, "kind": "original", "sourceSlide": null}, {"number": 19, "original": 6, "kind": "original", "sourceSlide": null}, {"number": 20, "original": 7, "kind": "original", "sourceSlide": null}, {"number": 21, "original": 8, "kind": "original", "sourceSlide": null}, {"number": 22, "original": 9, "kind": "original", "sourceSlide": null}, {"number": 23, "original": 10, "kind": "original", "sourceSlide": null}, {"number": 24, "original": 11, "kind": "original", "sourceSlide": null}, {"number": 25, "original": 12, "kind": "original", "sourceSlide": null}, {"number": 26, "original": null, "kind": "ortofoto", "sourceSlide": null}, {"number": 27, "original": 13, "kind": "original", "sourceSlide": null}, {"number": 28, "original": 14, "kind": "original", "sourceSlide": null}]
+[
+  {
+    "slide": 1,
+    "id": "original-1",
+    "original": 1,
+    "sourceSlide": null
+  },
+  {
+    "slide": 2,
+    "id": "video",
+    "original": null,
+    "sourceSlide": null
+  },
+  {
+    "slide": 3,
+    "id": "institucional-2",
+    "original": null,
+    "sourceSlide": 2
+  },
+  {
+    "slide": 4,
+    "id": "institucional-3",
+    "original": null,
+    "sourceSlide": 3
+  },
+  {
+    "slide": 5,
+    "id": "institucional-4",
+    "original": null,
+    "sourceSlide": 4
+  },
+  {
+    "slide": 6,
+    "id": "institucional-5",
+    "original": null,
+    "sourceSlide": 5
+  },
+  {
+    "slide": 7,
+    "id": "institucional-6",
+    "original": null,
+    "sourceSlide": 6
+  },
+  {
+    "slide": 8,
+    "id": "institucional-7",
+    "original": null,
+    "sourceSlide": 7
+  },
+  {
+    "slide": 9,
+    "id": "institucional-8",
+    "original": null,
+    "sourceSlide": 8
+  },
+  {
+    "slide": 10,
+    "id": "institucional-9",
+    "original": null,
+    "sourceSlide": 9
+  },
+  {
+    "slide": 11,
+    "id": "institucional-10",
+    "original": null,
+    "sourceSlide": 10
+  },
+  {
+    "slide": 12,
+    "id": "institucional-11",
+    "original": null,
+    "sourceSlide": 11
+  },
+  {
+    "slide": 13,
+    "id": "institucional-12",
+    "original": null,
+    "sourceSlide": 12
+  },
+  {
+    "slide": 14,
+    "id": "reserve-only",
+    "original": 3,
+    "sourceSlide": null
+  },
+  {
+    "slide": 15,
+    "id": "original-2",
+    "original": 2,
+    "sourceSlide": null
+  },
+  {
+    "slide": 16,
+    "id": "project-only",
+    "original": 3,
+    "sourceSlide": null
+  },
+  {
+    "slide": 17,
+    "id": "conservacion",
+    "original": null,
+    "sourceSlide": null
+  },
+  {
+    "slide": 18,
+    "id": "original-4",
+    "original": 4,
+    "sourceSlide": null
+  },
+  {
+    "slide": 19,
+    "id": "original-5",
+    "original": 5,
+    "sourceSlide": null
+  },
+  {
+    "slide": 20,
+    "id": "original-6",
+    "original": 6,
+    "sourceSlide": null
+  },
+  {
+    "slide": 21,
+    "id": "original-7",
+    "original": 7,
+    "sourceSlide": null
+  },
+  {
+    "slide": 22,
+    "id": "original-8",
+    "original": 8,
+    "sourceSlide": null
+  },
+  {
+    "slide": 23,
+    "id": "original-9",
+    "original": 9,
+    "sourceSlide": null
+  },
+  {
+    "slide": 24,
+    "id": "original-10",
+    "original": 10,
+    "sourceSlide": null
+  },
+  {
+    "slide": 25,
+    "id": "original-11",
+    "original": 11,
+    "sourceSlide": null
+  },
+  {
+    "slide": 26,
+    "id": "original-12",
+    "original": 12,
+    "sourceSlide": null
+  },
+  {
+    "slide": 27,
+    "id": "ortofoto",
+    "original": null,
+    "sourceSlide": null
+  },
+  {
+    "slide": 28,
+    "id": "original-13",
+    "original": 13,
+    "sourceSlide": null
+  },
+  {
+    "slide": 29,
+    "id": "original-14",
+    "original": 14,
+    "sourceSlide": null
+  }
+]
