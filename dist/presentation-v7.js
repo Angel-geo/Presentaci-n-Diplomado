@@ -1,4 +1,10 @@
 const $=id=>document.getElementById(id);
+// Presentation-only views: prevent pointer, touch and keyboard interaction.
+const staticViewStyle=document.createElement('style');
+staticViewStyle.textContent='#map,.embed-wrap iframe,.ortho-view{pointer-events:none!important;touch-action:none}#home,.embed-expand,.ortho-tools{display:none!important}#legend label{cursor:default}';
+document.head.append(staticViewStyle);
+$('map').inert=true;$('mapPanel').setAttribute('aria-label','Mapa de intervenciones · vista estática');$('home').hidden=true;
+
 let current=1,step=0,elements=[],view,mapStarted=false,renderToken=0;
 const sequenceDefinitions={3:{images:['reserva.jpg','proyecto.jpg'],labels:['Reserva RBTTF','Ámbito del proyecto']},5:{images:['corredores.jpg','maa.jpg','ccb.jpg'],labels:['Corredores y áreas protegidas','MAA','CCB']}};
 const sequences={};
@@ -84,15 +90,13 @@ function renderCollage(){
  document.querySelectorAll('.photo').forEach(b=>b.onclick=()=>{const on=!b.classList.contains('selected');document.querySelectorAll('.photo').forEach(x=>{x.classList.remove('selected');x.setAttribute('aria-pressed','false')});b.classList.toggle('selected',on);b.setAttribute('aria-pressed',String(on))});
 }
 function renderOrtho(){
- $('special').innerHTML='<h1 class="slide-title">Levantamiento fotogramétrico de cobertura forestal</h1><div class="ortho-view" data-interactive><img id="ortho" src="assets/ortofoto.webp" alt="Ortofoto suministrada con polígonos originales delimitados en rojo"></div><div class="ortho-tools"><button id="orthoDetail">Acercar a las áreas delimitadas</button><button id="orthoReset">Vista completa</button></div>';
- $('orthoDetail').onclick=()=>$('ortho').classList.add('detail');$('orthoReset').onclick=()=>$('ortho').classList.remove('detail');
+ $('special').innerHTML='<h1 class="slide-title">Levantamiento fotogramétrico de cobertura forestal</h1><div class="ortho-view" data-interactive><img id="ortho" src="assets/ortofoto.webp" alt="Ortofoto suministrada con polígonos originales delimitados en rojo"></div>';
 }
 function renderEmbed(src,title){
- const wrap=document.createElement('section');wrap.className='embed-wrap'+(elements[current-1].original===14?' final-embed':'');wrap.dataset.interactive='';
- const frame=document.createElement('iframe');frame.title=title;frame.src=src;frame.allow='fullscreen';frame.setAttribute('allowfullscreen','');
+ const wrap=document.createElement('section');wrap.className='embed-wrap'+(elements[current-1].original===14?' final-embed':'');wrap.dataset.interactive='';wrap.setAttribute('aria-label',title+' · vista estática');
+ const frame=document.createElement('iframe');frame.title=title+' · vista estática';frame.inert=true;frame.tabIndex=-1;frame.style.pointerEvents='none';frame.src=src;
  const status=document.createElement('div');status.className='embed-loading';status.textContent='Cargando '+title+'…';frame.onload=()=>status.hidden=true;
  wrap.append(frame,status);$('special').append(wrap);
- const expand=document.createElement('button');expand.className='embed-expand';expand.textContent='Ampliar tablero';expand.onclick=()=>{const expanded=wrap.classList.toggle('expanded');expand.textContent=expanded?'Volver a la diapositiva':'Ampliar tablero'};wrap.append(expand);
 }
 function animateNumbers(){
  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -108,7 +112,7 @@ async function initMap(){
  if(mapStarted)return;mapStarted=true;$('mapStatus').hidden=false;$('mapStatus').textContent='Cargando mapa…';if(view){view.remove();view=null}$('legend').replaceChildren();
  try{
   const layers=await fetch('mapdata-v4.json').then(r=>{if(!r.ok)throw Error('Map data HTTP '+r.status);return r.json()});
-  view=L.map('map',{scrollWheelZoom:false,attributionControl:true,zoomControl:true}).setView([14.48,-89.26],8);
+  view=L.map('map',{scrollWheelZoom:false,attributionControl:true,zoomControl:false,dragging:false,touchZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,tap:false}).setView([14.48,-89.26],8);
   const basemap=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri · CTPT / RBTTF',maxZoom:17}).addTo(view);
   let failures=0;basemap.on('tileerror',()=>{if(++failures>=3){$('mapStatus').hidden=false;$('mapStatus').textContent='Fondo cartográfico no disponible. Las capas del proyecto permanecen activas.'}});
   let bounds=L.latLngBounds([]);
@@ -123,13 +127,8 @@ async function initMap(){
    const label=['Infraestructura','Equipamiento','Planes de manejo'][kind];
    const iconUrl='data:'+layer.symbol.contentType+';base64,'+layer.symbol.imageData;
    const icon=L.icon({iconUrl,iconSize:[19,19],iconAnchor:[9.5+[-14,0,14][kind],9.5],popupAnchor:[-[-14,0,14][kind],-11]});
-   const legend=document.createElement('label'),im=new Image(),check=document.createElement('input');check.type='checkbox';check.checked=true;check.setAttribute('aria-label',label);im.src=iconUrl;im.alt='';legend.append(check,im,document.createTextNode(label));$('legend').append(legend);
-   const group=L.geoJSON(layer.data,{pointToLayer:(f,ll)=>{bounds.extend(ll);return L.marker(ll,{icon,alt:label+' · '+(f.properties.NOMBRE_1||''),title:label+' · '+(f.properties.NOMBRE_1||'')})},onEachFeature:(f,l)=>{
-    const box=document.createElement('div');box.className='record';const title=document.createElement('h3');title.textContent=label;box.append(title);
-    const fields=layer.popup.popupElements?.find(e=>e.type==='fields')?.fieldInfos||layer.popup.fieldInfos||[];
-    for(const field of fields){if(field.visible===false)continue;const value=f.properties[field.fieldName];if(value==null||value==='')continue;const row=document.createElement('p'),strong=document.createElement('strong');strong.textContent=field.label;row.append(strong,document.createElement('br'));const text=String(value);if(/^https?:\/\//i.test(text)){const a=document.createElement('a');a.href=text;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Ver documento';row.append(a)}else row.append(document.createTextNode(text));box.append(row)}
-    l.bindPopup(box,{maxWidth:310,maxHeight:270,autoPan:true});
-   }}).addTo(view);check.onchange=()=>{if(check.checked)group.addTo(view);else view.removeLayer(group)};
+   const legend=document.createElement('label'),im=new Image();im.src=iconUrl;im.alt='';legend.append(im,document.createTextNode(label));$('legend').append(legend);
+   L.geoJSON(layer.data,{interactive:false,pointToLayer:(f,ll)=>{bounds.extend(ll);return L.marker(ll,{icon,interactive:false,keyboard:false,alt:label+' · '+(f.properties.NOMBRE_1||'')})}}).addTo(view);
   }
   const reset=()=>{view.closePopup();view.fitBounds(bounds,{padding:[42,42],animate:false})};reset();$('home').onclick=reset;$('mapStatus').hidden=true;
  }catch(e){mapStarted=false;$('mapStatus').textContent='No se pudo cargar el mapa. ';const retry=document.createElement('button');retry.textContent='Reintentar';retry.onclick=initMap;$('mapStatus').append(retry);$('mapStatus').hidden=false;console.error(e)}
